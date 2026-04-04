@@ -12,9 +12,10 @@ The core intent of this project is to build the orchestration logic from scratch
 
 * **Handling State & Async Tasks:** The orchestrator iterates synchronously over the async tasks derived from the LLM's plan. State is maintained locally within the endpoint via an `executed_steps` array, which acts as an append-only ledger of successful tool calls.
 
-* **Guardrails & LLM Unreliability:** * The `cancel_order` tool simulates a 20% failure rate. 
+* **Guardrails & LLM Unreliability:**
+    * The `cancel_order` tool simulates a 20% failure rate. 
     * The orchestrator strictly evaluates the return state of every tool. If a tool fails, the loop halts immediately.
-    * By halting the loop, the system prevents downstream actions (like sending a confirmation email for an order that failed to cancel). The endpoint returns a clean HTTP 200 response containing a specific `failure` status, the generated plan, and the ledger of steps executed prior to the failure.
+    * By halting the loop, the system prevents downstream actions (like sending a confirmation email for an order that failed to cancel). The endpoint returns a clean HTTP 200 response containing a specific `failure` status, the generated plan, and the ledger of steps executed before the failure.
 
 ## Tech Stack
 
@@ -27,7 +28,7 @@ The core intent of this project is to build the orchestration logic from scratch
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/sudo-boo/mini-agent-orchestrator.git](https://github.com/sudo-boo/mini-agent-orchestrator.git)
+    git clone https://github.com/sudo-boo/mini-agent-orchestrator.git
     cd mini-agent-orchestrator
     ```
 
@@ -43,9 +44,9 @@ The core intent of this project is to build the orchestration logic from scratch
     ```
 
 4.  **Configure Environment Variables:**
-    Create a `.env` file in the root directory and add your Google Gemini API key:
-    ```env
-    GEMINI_API_KEY=your_api_key_here
+    Export your Google Gemini API key to be used by the script:
+    ```bash
+    export GEMINI_API_KEY=your_api_key_here
     ```
 
 ## Running the Application
@@ -76,6 +77,8 @@ curl -X POST "[http://127.0.0.1:8000/process](http://127.0.0.1:8000/process)" \
 
 ## Running the Test Script
 A comprehensive test suite is included to validate the golden path, edge cases, and failure states. Ensure the server is running, then execute the test script in a separate terminal:
+
+In a new terminal, run:
 
 ```bash
 python test-main.py
