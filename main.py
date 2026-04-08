@@ -5,7 +5,6 @@ import random
 import logging
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
@@ -17,9 +16,6 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 logger = logging.getLogger("MiniAgent")
-
-# Load environment variables
-load_dotenv()
 
 # Initialize the new client
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
